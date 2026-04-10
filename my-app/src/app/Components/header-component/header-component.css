@@ -1,0 +1,8 @@
+header{
+    background-color: #353535;
+    color: #fff;
+    margin: 0;
+}
+nav{
+    display: flex;
+}
