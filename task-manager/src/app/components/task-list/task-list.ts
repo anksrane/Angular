@@ -10,38 +10,44 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
-  imports:[CommonModule],
+  imports: [CommonModule],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })
-export class TaskList implements OnInit{
+export class TaskList implements OnInit {
   // Signal to store tasks
   tasks = signal<Task[]>([]);
+  hasNextPage = signal<boolean>(true);
+
+  currentPage = signal<number>(1);
+  pageSize = signal<number>(10);
+  totalRecords = signal<number>(0);
+
 
   // Filtered data (used in UI)
-  filteredTasks = signal<Task[]>([]);  
+  filteredTasks = signal<Task[]>([]);
 
   // Loading
   isLoading = signal<boolean>(false);
 
   // Search & Filter streams
   private searchSubject = new Subject<string>();
-  private statusSubject = new Subject<string>();  
+  private statusSubject = new Subject<string>();
 
   constructor(
     private taskService: TaskService,
     private router: Router
-  ) {}
+  ) { }
 
-  onEdit(id:string){
-    this.router.navigate(['/edit',id]);
+  onEdit(id: string) {
+    this.router.navigate(['/edit', id]);
   }
 
   ngOnInit(): void {
-    this.getTasks();
+    this.loadTasks();
     this.setupFilters();
   }
-  
+
   onDelete(task: Task) {
 
     const confirmDelete = confirm(`Are you sure you want to delete "${task.title}"?`);
@@ -67,19 +73,25 @@ export class TaskList implements OnInit{
         console.error('Error deleting task', err);
       }
     });
-  }  
+  }
 
   // Fetch data from API
-  getTasks() {
+  loadTasks() {
     this.isLoading.set(true);
 
-    this.taskService.getTasks().subscribe({
+    const page = this.currentPage();
+    const limit = this.pageSize();
+
+    this.taskService.getTasks(page, limit).subscribe({
       next: (data) => {
 
         const activeTasks = data.filter(task => !task.isDeleted);
 
         this.tasks.set(activeTasks);
         this.filteredTasks.set(activeTasks);
+
+        // Detect last page
+        this.hasNextPage.set(data.length === limit);
 
         this.isLoading.set(false);
       },
@@ -107,7 +119,7 @@ export class TaskList implements OnInit{
 
         const matchesSearch =
           task.title.toLowerCase().includes(searchText.toLowerCase()) ||
-          task.description?.toLowerCase().includes(searchText.toLowerCase());          
+          task.description?.toLowerCase().includes(searchText.toLowerCase());
 
         const matchesStatus =
           status ? task.status === status : true;
@@ -127,5 +139,18 @@ export class TaskList implements OnInit{
   // Called from UI
   onStatusChange(value: string) {
     this.statusSubject.next(value);
-  }  
+  }
+
+  nextPage() {
+    if (!this.hasNextPage()) return;
+    this.currentPage.set(this.currentPage() + 1);
+    this.loadTasks();
+  }
+
+  prevPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.set(this.currentPage() - 1);
+      this.loadTasks();
+    }
+  }
 }

@@ -12,8 +12,10 @@ export class TaskService {
   constructor (private http: HttpClient){}
 
   // get all tasks
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(API_ENDPOINTS.TASKS);
+  getTasks(page: number, limit: number): Observable<Task[]> {
+    return this.http.get<Task[]>(
+      `${API_ENDPOINTS.TASKS}?page=${page}&limit=${limit}`
+    );
   }
 
   getTaskById(id: string): Observable<Task> {
