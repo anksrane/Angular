@@ -16,4 +16,8 @@ export const routes: Routes = [
         path: 'addtask',
         component: TaskForm,
     },    
+    {
+        path:'edit/:id',
+        component: TaskForm
+    }
 ];

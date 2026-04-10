@@ -4,6 +4,7 @@ import { Task } from '../../models/task';
 
 import { Subject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 
@@ -27,7 +28,14 @@ export class TaskList implements OnInit{
   private searchSubject = new Subject<string>();
   private statusSubject = new Subject<string>();  
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private router: Router
+  ) {}
+
+  onEdit(id:string){
+    this.router.navigate(['/edit',id]);
+  }
 
   ngOnInit(): void {
     this.getTasks();

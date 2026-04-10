@@ -39,6 +39,7 @@
       <th>Title</th>
       <th>Description</th>
       <th>Status</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -46,6 +47,9 @@
       <td>{{ task.title }}</td>
       <td>{{ task.description }}</td>
       <td>{{ task.status }}</td>
+      <td>
+        <button class="edit-btn" (click)="onEdit(task.id)">Edit</button>
+      </td>      
     </tr>
   </tbody>
 </table>
