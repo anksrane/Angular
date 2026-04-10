@@ -1,0 +1,102 @@
+/* Container */
+.task-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: Arial, sans-serif;
+}
+
+/* Title */
+.task-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Success message */
+.success-message {
+  background-color: #e6ffed;
+  color: #2e7d32;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Form */
+.task-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 18px;
+}
+
+/* Labels */
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Inputs */
+.form-input,
+.form-textarea,
+.form-select {
+  width: stretch;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+/* Focus effect */
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 4px rgba(25, 118, 210, 0.3);
+  outline: none;
+}
+
+/* Textarea */
+.form-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Error message */
+.error-message small {
+  color: #d32f2f;
+  font-size: 12px;
+}
+
+/* Button */
+.submit-btn {
+  padding: 12px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+/* Button hover */
+.submit-btn:hover {
+  background-color: #125ea8;
+}
+
+/* Disabled button */
+.submit-btn:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+}
