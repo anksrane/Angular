@@ -20,7 +20,7 @@ export class TaskList implements OnInit {
   hasNextPage = signal<boolean>(true);
 
   currentPage = signal<number>(1);
-  pageSize = signal<number>(10);
+  pageSize = signal<number>(5);
   totalRecords = signal<number>(0);
 
 
@@ -76,27 +76,22 @@ export class TaskList implements OnInit {
   }
 
   // Fetch data from API
-  loadTasks() {
+  loadTasks(search = '', status = '') {
     this.isLoading.set(true);
 
-    const page = this.currentPage();
-    const limit = this.pageSize();
-
-    this.taskService.getTasks(page, limit).subscribe({
+    this.taskService.getTasks(
+      this.currentPage(),
+      this.pageSize(),
+      search,
+      status
+    ).subscribe({
       next: (data) => {
-
         const activeTasks = data.filter(task => !task.isDeleted);
 
         this.tasks.set(activeTasks);
         this.filteredTasks.set(activeTasks);
 
-        // Detect last page
-        this.hasNextPage.set(data.length === limit);
-
-        this.isLoading.set(false);
-      },
-      error: (err) => {
-        console.error('Error fetching tasks', err);
+        this.hasNextPage.set(data.length === this.pageSize());
         this.isLoading.set(false);
       }
     });
@@ -133,12 +128,14 @@ export class TaskList implements OnInit {
 
   // Called from UI
   onSearchChange(value: string) {
-    this.searchSubject.next(value);
+    this.currentPage.set(1);
+    this.loadTasks(value, '');
   }
 
   // Called from UI
   onStatusChange(value: string) {
-    this.statusSubject.next(value);
+    this.currentPage.set(1);
+    this.loadTasks(value, '');
   }
 
   nextPage() {

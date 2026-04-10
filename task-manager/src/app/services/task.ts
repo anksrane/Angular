@@ -9,13 +9,21 @@ import { API_ENDPOINTS } from '../core/config/api.config';
   providedIn: 'root',
 })
 export class TaskService {
-  constructor (private http: HttpClient){}
+  constructor(private http: HttpClient) { }
 
   // get all tasks
-  getTasks(page: number, limit: number): Observable<Task[]> {
-    return this.http.get<Task[]>(
-      `${API_ENDPOINTS.TASKS}?page=${page}&limit=${limit}`
-    );
+  getTasks(page: number, limit: number, search = '', status = ''): Observable<Task[]> {
+    let url = `${API_ENDPOINTS.TASKS}?page=${page}&limit=${limit}`;
+
+    if (search) {
+      url += `&search=${search}`;
+    }
+
+    if (status) {
+      url += `&status=${status}`;
+    }
+
+    return this.http.get<Task[]>(url);
   }
 
   getTaskById(id: string): Observable<Task> {
@@ -35,5 +43,5 @@ export class TaskService {
   // DELETE TASK
   deleteTask(id: string): Observable<void> {
     return this.http.delete<void>(`${API_ENDPOINTS.TASKS}/${id}`);
-  }  
+  }
 }
