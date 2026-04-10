@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-// import { ReactiveFormsModule } from '@angular/forms';
+import { Header } from './components/header/header';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

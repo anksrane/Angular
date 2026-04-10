@@ -41,6 +41,33 @@ export class TaskList implements OnInit{
     this.getTasks();
     this.setupFilters();
   }
+  
+  onDelete(task: Task) {
+
+    const confirmDelete = confirm(`Are you sure you want to delete "${task.title}"?`);
+
+    if (!confirmDelete) return;
+
+    const updatedPayload: Partial<Task> = {
+      isDeleted: true,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.taskService.updateTask(task.id, updatedPayload).subscribe({
+      next: () => {
+
+        // ✅ Remove from UI instantly (no reload)
+        const updatedList = this.tasks().filter(t => t.id !== task.id);
+
+        this.tasks.set(updatedList);
+        this.filteredTasks.set(updatedList);
+
+      },
+      error: (err) => {
+        console.error('Error deleting task', err);
+      }
+    });
+  }  
 
   // Fetch data from API
   getTasks() {
@@ -48,8 +75,12 @@ export class TaskList implements OnInit{
 
     this.taskService.getTasks().subscribe({
       next: (data) => {
-        this.tasks.set(data);
-        this.filteredTasks.set(data);
+
+        const activeTasks = data.filter(task => !task.isDeleted);
+
+        this.tasks.set(activeTasks);
+        this.filteredTasks.set(activeTasks);
+
         this.isLoading.set(false);
       },
       error: (err) => {

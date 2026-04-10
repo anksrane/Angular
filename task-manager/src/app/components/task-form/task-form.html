@@ -1,6 +1,5 @@
 <div class="task-container">
-  <h2 class="task-title">Add Task</h2>
-  <h2>{{ isEditMode() ? 'Edit Task' : 'Add Task' }}</h2>
+  <h2  class="task-title">{{ isEditMode() ? 'Edit Task' : 'Add Task' }}</h2>
 
   <div *ngIf="successMessage()" class="success-message">
     {{ successMessage() }}

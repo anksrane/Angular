@@ -119,7 +119,6 @@ export class TaskForm{
       const payload: Partial<Task> = {
         ...basePayload,
         isDeleted: false,
-        isTrashed: false,
         createdAt: currentTime,
         userId: 'Guest'
       };
@@ -150,61 +149,4 @@ export class TaskForm{
       });
     }
   }
-
-
-  // onSubmit() {
-  //   if (this.taskForm.invalid) {
-  //     this.taskForm.markAllAsTouched(); // show errors
-  //     return;
-  //   }
-
-  //   this.isSubmitting.set(true);
-
-  //   const formValue = this.taskForm.value;
-  //   const currentTime = new Date().toISOString();
-
-  //   const payload: Partial<Task> = {
-  //     title: formValue.title,
-  //     description: formValue.description,
-  //     status: formValue.status,
-  //     isDeleted: false,
-  //     isTrashed: false,
-  //     createdAt: currentTime,
-  //     updatedAt: currentTime,
-  //     userId: 'Guest'
-  //   };
-
-  //   this.taskService.addTask(payload).subscribe({
-  //     next: (res) => {
-  //       console.log('Task created', res);
-
-  //       // Show success message
-  //       this.successMessage.set('Task added successfully! Redirecting to task...');    
-
-
-  //       // reset form
-  //       this.taskForm.reset({
-  //         title: '',
-  //         description: '',
-  //         status: 'pending'
-  //       });
-
-  //       timer(3000).subscribe(()=>{
-  //         this.isSubmitting.set(false);
-  //         this.successMessage.set("");
-  //         this.router.navigate(['/tasks']);
-  //       })
-  //       // this.isSubmitting.set(false);
-
-  //       // Redirect after 3 sec   
-  //       // timer(3000).subscribe(()=>{
-  //       //   this.router.navigate(['/tasks']);
-  //       // })
-  //     },
-  //     error: (err) => {
-  //       console.error('Error creating task', err);
-  //       this.isSubmitting.set(false);
-  //     }
-  //   });
-  // }
 }

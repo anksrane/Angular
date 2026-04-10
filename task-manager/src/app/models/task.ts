@@ -5,7 +5,6 @@ export interface Task {
   status: string;
 
   isDeleted: boolean;
-  isTrashed: boolean;
 
   createdAt: string;
   updatedAt: string;

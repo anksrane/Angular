@@ -1,1 +1,17 @@
-<p>header works!</p>
+<header class="header">
+  <!-- LEFT -->
+  <div class="left">
+    <a routerLink="/" class="logo">Task Manager</a>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+
+    <!-- Show Add Task if on tasks page -->
+    <a *ngIf="isTasksPage()" routerLink="/addtask">Add Task</a>
+
+    <!-- Show All Tasks if on add page -->
+    <a *ngIf="isAddPage()" routerLink="/tasks">All Tasks</a>
+
+  </div>
+</header>

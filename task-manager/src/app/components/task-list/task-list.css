@@ -1,3 +1,7 @@
+.task-outer-container{
+  padding: 16px 24px;
+}
+
 .filter-container {
   display: flex;
   gap: 20px;
@@ -60,17 +64,12 @@
   box-shadow: 0 0 4px rgba(74, 144, 226, 0.3);
 }
 
-/* Optional: make both equal height */
-/* .search-input,
-.status-dropdown {
-  height: 40px;
-} */
-
 .task-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 16px;
   font-family: Arial, sans-serif;
+  table-layout: fixed;
 }
 
 .task-table thead {
@@ -99,6 +98,31 @@
 
 .task-table td {
   color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;  
+}
+
+.task-table th:nth-child(4),
+.task-table td:nth-child(4) {
+  width: 120px;       /* small width for Actions */
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Let other columns take remaining space */
+.task-table th:nth-child(1),
+.task-table td:nth-child(1) {
+  width: 25%;
+}
+
+.task-table th:nth-child(2),
+.task-table td:nth-child(2) {
+  width: 55%;
+}
+
+.task-table th:nth-child(3),
+.task-table td:nth-child(3) {
+  width: 20%;
 }
 
 .edit-btn {
@@ -124,3 +148,29 @@
   outline: none;
   box-shadow: 0 0 3px rgba(74, 144, 226, 0.5);
 }
+
+.del-btn {
+  padding: 6px 12px;
+  background-color: #e74c3c; /* red */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 0.2s ease;
+}
+
+.del-btn:hover {
+  background-color: #c0392b;
+}
+
+.del-btn:active {
+  transform: scale(0.98);
+}
+
+.del-btn:focus {
+  outline: none;
+  box-shadow: 0 0 3px rgba(231, 76, 60, 0.5);
+}
+

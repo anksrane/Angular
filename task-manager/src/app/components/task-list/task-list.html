@@ -1,60 +1,63 @@
-<h2>Task List</h2>
+<div class="task-outer-container">
+  <h2>Task List</h2>
 
-<!-- Loading -->
-<div *ngIf="isLoading()">Loading...</div>
+  <!-- Loading -->
+  <div *ngIf="isLoading()">Loading...</div>
 
-<div class="filter-container">
-  
-  <div class="filter-group">
-    <label for="search">Search Tasks</label>
-    <input
-      id="search"
-      class="search-input"
-      type="text"
-      placeholder="Search tasks..."
-      (input)="onSearchChange($event.target.value)"
-    />
+  <div class="filter-container">
+    
+    <div class="filter-group">
+      <label for="search">Search Tasks</label>
+      <input
+        id="search"
+        class="search-input"
+        type="text"
+        placeholder="Search tasks..."
+        (input)="onSearchChange($event.target.value)"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label for="status">Filter by Status</label>
+      <select
+        id="status"
+        class="status-dropdown"
+        (change)="onStatusChange($any($event.target).value)"
+      >
+        <option value="">All</option>
+        <option value="pending">Pending</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+
   </div>
 
-  <div class="filter-group">
-    <label for="status">Filter by Status</label>
-    <select
-      id="status"
-      class="status-dropdown"
-      (change)="onStatusChange($any($event.target).value)"
-    >
-      <option value="">All</option>
-      <option value="pending">Pending</option>
-      <option value="in-progress">In Progress</option>
-      <option value="completed">Completed</option>
-    </select>
+  <!-- Table -->
+  <table *ngIf="!isLoading() && filteredTasks().length > 0" class="task-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of filteredTasks()">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>
+          <button class="edit-btn" (click)="onEdit(task.id)">Edit</button>
+          <button class="del-btn" (click)="onDelete(task)">Delete</button>
+        </td>      
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading() && filteredTasks().length === 0">
+    No tasks found
   </div>
-
-</div>
-
-<!-- Table -->
-<table *ngIf="!isLoading() && filteredTasks().length > 0" class="task-table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let task of filteredTasks()">
-      <td>{{ task.title }}</td>
-      <td>{{ task.description }}</td>
-      <td>{{ task.status }}</td>
-      <td>
-        <button class="edit-btn" (click)="onEdit(task.id)">Edit</button>
-      </td>      
-    </tr>
-  </tbody>
-</table>
-
-<!-- Empty State -->
-<div *ngIf="!isLoading() && filteredTasks().length === 0">
-  No tasks found
 </div>
