@@ -1,9 +1,6 @@
 <div class="task-outer-container">
   <h2>Task List</h2>
 
-  <!-- Loading -->
-  <div *ngIf="isLoading()">Loading...</div>
-
   <div class="filter-container">
 
     <div class="filter-group">
@@ -23,6 +20,9 @@
     </div>
 
   </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading()">Loading...</div>
 
   <!-- Table -->
   <table *ngIf="!isLoading() && filteredTasks().length > 0" class="task-table">
